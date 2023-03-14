@@ -1,32 +1,46 @@
 from bff.seedwork.aplicacion.sagas import CoordinadorOrquestacion, Transaccion, Inicio, Fin
 from bff.seedwork.dominio.eventos import EventoDominio
 
-from bff.modulos.sagas.aplicacion.comandos.pagos import PagarReserva, RevertirPago
-from bff.modulos.sagas.aplicacion.comandos.gds import ConfirmarReserva, RevertirConfirmacion
-
-from bff.modulos.vuelos.aplicacion.comandos.crear_reserva import CrearReserva
-from bff.modulos.vuelos.aplicacion.comandos.aprobar_reserva import AprobarReserva
-from bff.modulos.vuelos.aplicacion.comandos.cancelar_reserva import CancelarReserva
-from bff.modulos.vuelos.dominio.eventos.reservas import ReservaCreada, ReservaCancelada, ReservaAprobada, CreacionReservaFallida, AprobacionReservaFallida
-from bff.modulos.sagas.dominio.eventos.pagos import ReservaPagada, PagoRevertido
-from bff.modulos.sagas.dominio.eventos.gds import ReservaGDSConfirmada, ConfirmacionGDSRevertida, ConfirmacionFallida
+from ordenes.modulos.ordenes.aplicacion.comandos.crear_orden import CrearOrden
+from ordenes.modulos.ordenes.infraestructura.schema.v1.eventos import EventoOrdenCreada
+from rutas.modulos.rutas.aplicacion.comandos.programar_ruta import ProgramarRuta
+from rutas.modulos.rutas.infraestructura.schema.v1.eventos import EventoRutaProgramada
+from drivers.modulos.drivers.aplicacion.comandos.asignar_ruta import AsignarRuta
+from drivers.modulos.drivers.infraestructura.schema.v1.eventos import EventoRutaAsignada
 
 
-class CoordinadorReservas(CoordinadorOrquestacion):
+class CoordinadorOrdenes(CoordinadorOrquestacion):
 
     def inicializar_pasos(self):
         self.pasos = [
             Inicio(index=0),
-            Transaccion(index=1, comando=CrearReserva, evento=ReservaCreada, error=CreacionReservaFallida, compensacion=CancelarReserva),
-            Transaccion(index=2, comando=PagarReserva, evento=ReservaPagada, error=PagoFallido, compensacion=RevertirPago),
-            Transaccion(index=3, comando=ConfirmarReserva, evento=ReservaGDSConfirmada, error=ConfirmacionFallida, compensacion=ConfirmacionGDSRevertida),
-            Transaccion(index=4, comando=AprobarReserva, evento=ReservaAprobada, error=AprobacionReservaFallida, compensacion=CancelarReserva),
+            Transaccion(
+                index=1,
+                comando=CrearOrden,
+                evento=EventoOrdenCreada,
+                error=None,
+                compensacion=None
+            ),
+            Transaccion(
+                index=2,
+                comando=ProgramarRuta,
+                evento=EventoRutaProgramada,
+                error=None,
+                compensacion=None
+            ),
+            Transaccion(
+                index=3,
+                comando=AsignarRuta,
+                evento=EventoRutaAsignada,
+                error=None,
+                compensacion=None
+            ),
             Fin(index=5)
         ]
 
     def iniciar(self):
         self.persistir_en_saga_log(self.pasos[0])
-    
+
     def terminar(self):
         self.persistir_en_saga_log(self.pasos[-1])
 
@@ -45,7 +59,7 @@ class CoordinadorReservas(CoordinadorOrquestacion):
 # TODO Agregue un Listener/Handler para que se puedan redireccionar eventos de dominio
 def oir_mensaje(mensaje):
     if isinstance(mensaje, EventoDominio):
-        coordinador = CoordinadorReservas()
+        coordinador = CoordinadorOrdenes()
         coordinador.procesar_evento(mensaje)
     else:
         raise NotImplementedError("El mensaje no es evento de Dominio")

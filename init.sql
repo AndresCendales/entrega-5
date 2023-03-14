@@ -1,5 +1,5 @@
 create database alpesonline;
-
+create database ordenes;
 CREATE TABLE asignaciones(
     id varchar(36) NOT NULL COMMENT 'Llave primaria',
     fecha_creacion DATETIME NOT NULL COMMENT 'Fecha de creación del registro',
@@ -13,4 +13,12 @@ CREATE TABLE asignaciones(
 CREATE TABLE drivers (
     id varchar(36) NOT NULL PRIMARY KEY COMMENT 'Llave primaria',
     nombre VARCHAR(255)
-)
+);
+
+CREATE TABLE ordenes(
+    id varchar(36) NOT NULL COMMENT 'Llave primaria',
+    id_cliente VARCHAR(36),
+    tipo VARCHAR(255),
+    fecha_creacion DATETIME NOT NULL COMMENT 'Fecha de creación del registro',
+    fecha_actualizacion DATETIME NOT NULL COMMENT 'Fecha de actualización del registro'
+);

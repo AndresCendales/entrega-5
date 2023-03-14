@@ -6,7 +6,7 @@ from flask import request, session
 from flask import Response
 from drivers.modulos.drivers.aplicacion.mapeadores import MapeadorRutaDTOJson
 from drivers.seedwork.aplicacion.comandos import ejecutar_commando
-from drivers.modulos.drivers.aplicacion.comandos.crear_reserva import AsignarRuta
+from drivers.modulos.drivers.aplicacion.comandos.asignar_ruta import AsignarRuta
 
 bp = api.crear_blueprint('drivers', '/drivers')
 
