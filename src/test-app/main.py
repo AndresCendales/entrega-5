@@ -9,7 +9,7 @@ import traceback
 def suscribirse_a_eventos(topico, suscripcion):
     cliente = None
     try:
-        cliente = pulsar.Client(f'pulsar://127.0.0.1:6650')
+        cliente = pulsar.Client('pulsar://127.0.0.1:6650')
         consumidor = cliente.subscribe(
             topico,
             consumer_type=_pulsar.ConsumerType.Shared,

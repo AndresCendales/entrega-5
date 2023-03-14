@@ -109,8 +109,8 @@ def registrar_unidad_de_trabajo(serialized_obj):
 def flask_uow():
     from flask import session
     from ordenes.config.uow import UnidadTrabajoSQLAlchemy, UnidadTrabajoPulsar
-    if session.get('uow'):
-        return session['uow']
+    # if session.get('uow'):
+    #     return session['uow']
 
     uow_serialized = pickle.dumps(UnidadTrabajoSQLAlchemy())
     if session.get('uow_metodo') == 'pulsar':

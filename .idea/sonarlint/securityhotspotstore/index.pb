@@ -1,6 +1,4 @@
 
-J
-src/ordenes/api/ordenes.py,e/2/e222cb0aff8904573c6ac2a1ef811b670bd6be4e
 P
  src/drivers/seedwork/__init__.py,9/e/9e90033e1479836c46d5aa12c1e8b71f2cfccd01
 X
@@ -37,8 +35,6 @@ K
 src/drivers/api/__init__.py,5/7/572a8123d2774a98a327884715f813a02b0cf974
 G
 src/bff/api/__init__.py,1/d/1dc6f7b6737cba108732dcec3ec8b42c6afa79c4
-n
->src/ordenes/modulos/ordenes/aplicacion/comandos/crear_orden.py,9/7/9749eec519fffb041671495b05a3d0a3917f2d9e
 m
 =src/rutas/modulos/rutas/aplicacion/comandos/programar_ruta.py,6/f/6f3f60b8eb44bf60ccab64f46fdc63b6dc5a2273
 l
